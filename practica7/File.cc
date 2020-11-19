@@ -19,63 +19,44 @@ File::File( std::string& pattern, std::string& input_file, std::string& output_f
     // Numero de simbolos de alfabeto
     getline(input_aux,line);
     mydfa_.SetNumberofSymbols(line);
-    output_aux << line<<std::endl;
-   
-    
+
     // Set Alphabeto 
     for(int i = 0; i < mydfa_.GetSizeAlph();i++){
       getline(input_aux,line); 
       mydfa_.SetAlphabet(line);
-      output_aux << line<<std::endl;
     }
 
     // Numero de Estados
     getline(input_aux,line);
     mydfa_.SetNumberofState(line);
-    output_aux << line<<std::endl;
-
     
      // Set Vector Estados 
     for(int i = 0; i <mydfa_.GetSizeState();i++){ 
       getline(input_aux,line);
       mydfa_.SetState(line);
-      output_aux << line<<std::endl;
     }
   
     //Set Estado Inicial 
     getline(input_aux,line);
     mydfa_.SetStartingState(line);
-    output_aux << line<<std::endl;
     
-
     // Numero de Estados de Aceptación
     getline(input_aux,line);
     mydfa_.SetHowManyAcceptingStates(line); 
-    output_aux << line<<std::endl;
   
     // Set Vector de Estados de Aceptación // te coge todo el pdf mria
    for(int i = 0; i < mydfa_.GetSizeAccept();i++){
       getline(input_aux,line);
       mydfa_.SetAcceptState(line); 
-      
-      output_aux <<  line<<std::endl;
    }
     // Transicciones
     getline(input_aux,line);
     mydfa_.SetTransictions(line);
-    output_aux << line<<std::endl;
-  
-     
-    //bueno si funciona bien, no importa
-   // Dfa::Node aux;
+    
+    // Leo el vector de transicciones
     std::string entry_,state_one,state_two;
     while (input_aux >> state_one >> entry_ >> state_two ){
-
-    mydfa_.SetTransVector(state_one, entry_, state_two);
-    output_aux << state_one <<" "<<entry_ << " "<< state_two<<"\n";
-   
-    
-
+      mydfa_.SetTransVector(state_one, entry_, state_two);
     }
 
     // leer cadena
@@ -87,13 +68,15 @@ File::File( std::string& pattern, std::string& input_file, std::string& output_f
       while(getline(read_pattern,line)){
 
         mydfa_.SetCadena(line);
-        mydfa_.Resolve(); 
-        
+          if(mydfa_.Resolve() == true){
+            output_aux << "La cadena " << line << " es aceptada por el automata." << std::endl;
+          }else{
+            output_aux << "La cadena " << line << " no es aceptada por el automata."<< std::endl;
+          }
       }
-
     }else{
-      std::cout << "Fichero input.dfa no se abrió"<<std::endl;
-    }
+        std::cout << "Fichero input.dfa no se abrió"<<std::endl;
+       }
     read_pattern.close();
 
     }else{

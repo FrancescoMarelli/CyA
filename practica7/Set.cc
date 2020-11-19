@@ -10,13 +10,6 @@ Set::Set(unsigned& size) {
 
 Set::~Set(){}
 
-void Set::Decode(std::string& in_str) {
-
-}
-
-void Set::SetAlphabet(std::string& cadena) {
-  my_alpha = cadena;
-}
 
 
 
