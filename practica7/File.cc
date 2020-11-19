@@ -27,7 +27,6 @@ File::File( std::string& pattern, std::string& input_file, std::string& output_f
       getline(input_aux,line); 
       mydfa_.SetAlphabet(line);
       output_aux << line<<std::endl;
- 
     }
 
     // Numero de Estados
